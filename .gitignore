@@ -1,0 +1,23 @@
+# Ignore npm dependencies
+node_modules/
+
+# Ignore ASBuild generated build
+dist/
+
+# 个人项目依赖缓存文件
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Optional: Ignore build output folder (if different from dist/)
+build/
+out/
+
+# 如果你使用的是 VS Code 编辑器，忽略 VS Code 文件
+.vscode/
+
+/lib/**/*.d.ts
+
+.DS_Store
+
+**/.DS_Store
