@@ -1,7 +1,7 @@
 {
-  "name": "wasm-assemblyscript",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "wasm-assemblyscript-test",
+  "version": "0.0.1",
+  "main": "assembly/index.ts",
   "scripts": {
     "test": "node tests",
     "asbuild:debug": "asc assembly/index.ts --target debug",
@@ -9,8 +9,8 @@
     "asbuild": "npm run asbuild:debug && npm run asbuild:release",
     "start": "npx serve ."
   },
-  "author": "",
-  "license": "ISC",
+  "author": "jingze.dai",
+  "license": "Apache-2.0",
   "description": "",
   "devDependencies": {
     "assemblyscript": "^0.27.29",
@@ -24,5 +24,14 @@
       "import": "./build/release.js",
       "types": "./build/release.d.ts"
     }
+  },
+  "files": [
+    "/assembly",
+    "package-lock.json",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jing-ze/wasm-assemblyscript.git"
   }
 }
