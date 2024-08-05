@@ -1,6 +1,6 @@
 # Ignore npm dependencies
 node_modules/
-
+/node_modules/
 # Ignore ASBuild generated build
 dist/
 
@@ -11,6 +11,7 @@ dist/
 
 # Optional: Ignore build output folder (if different from dist/)
 build/
+/build/
 out/
 
 # 如果你使用的是 VS Code 编辑器，忽略 VS Code 文件
