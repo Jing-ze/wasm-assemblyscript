@@ -45,11 +45,11 @@ type ParseConfigFunc<PluginConfig> = (
 ) => ParseResult<PluginConfig>;
 type OnHttpHeadersFunc<PluginConfig> = (
   context: HttpContext,
-  config: PluginConfig | null,
+  config: PluginConfig,
 ) => FilterHeadersStatusValues;
 type OnHttpBodyFunc<PluginConfig> = (
   context: HttpContext,
-  config: PluginConfig | null,
+  config: PluginConfig,
   body: ArrayBuffer,
 ) => FilterDataStatusValues;
 
@@ -311,7 +311,7 @@ class CommonCtx<PluginConfig> extends Context implements HttpContext {
     }
     return this.commonRootCtx.onHttpRequestHeaders(
       this,
-      this.config
+      this.config as PluginConfig
     );
   }
 
