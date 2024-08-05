@@ -36,10 +36,11 @@ class RuleConfig<PluginConfig> {
   category: Category;
   routes!: Map<string, boolean>;
   hosts!: Array<HostMatcher>;
-  config!: PluginConfig | null;
+  config: PluginConfig | null;
 
   constructor() {
     this.category = Category.Route;
+    this.config = null;
   }
 }
 
