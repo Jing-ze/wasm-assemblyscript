@@ -1,4 +1,4 @@
-import { log, LogLevelValues } from "proxy-wasm-assemblyscript-sdk-test/assembly";
+import { log, LogLevelValues } from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 
 enum LogLevel {
   Trace = 0,

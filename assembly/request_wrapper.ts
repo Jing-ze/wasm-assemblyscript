@@ -2,7 +2,7 @@ import {
   stream_context,
   log,
   LogLevelValues
-} from "proxy-wasm-assemblyscript-sdk-test/assembly";
+} from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 
 export function getRequestScheme(): string {
   let scheme: string | null = stream_context.headers.request.get(":scheme");

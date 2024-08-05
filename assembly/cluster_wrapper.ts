@@ -3,7 +3,7 @@ import {
   LogLevelValues,
   get_property,
   WasmResultValues,
-} from "proxy-wasm-assemblyscript-sdk-test/assembly";
+} from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 import { getRequestHost } from "./request_wrapper";
   
 export abstract class Cluster {

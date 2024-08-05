@@ -10,7 +10,7 @@ import {
   FilterDataStatusValues,
   get_buffer_bytes,
   BufferTypeValues,
-} from "proxy-wasm-assemblyscript-sdk-test/assembly";
+} from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 import {
   getRequestHost,
   getRequestMethod,

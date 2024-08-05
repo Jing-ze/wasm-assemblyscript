@@ -4,7 +4,7 @@ import {
   LogLevelValues,
   log,
   WasmResultValues,
-} from "proxy-wasm-assemblyscript-sdk-test/assembly";
+} from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 import { JSON } from "assemblyscript-json/assembly";
 
 enum Category {

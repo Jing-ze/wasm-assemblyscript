@@ -15,7 +15,7 @@ import {
   WasmResultValues,
   RootContext,
   ResponseCallBack
-} from "proxy-wasm-assemblyscript-sdk-test/assembly";
+} from "@higress/proxy-wasm-assemblyscript-sdk/assembly";
 
 export interface HttpClient {
   get(path: string, headers: Headers, cb: ResponseCallBack, timeoutMillisecond: u32): bool;

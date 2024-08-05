@@ -1,8 +1,7 @@
-export * from "proxy-wasm-assemblyscript-sdk-test/assembly/proxy";
-import { SetCtx, HttpContext, ProcessRequestHeadersBy, logger, ParseConfigBy, ParseResult, ProcessResponseHeadersBy } from "wasm-assemblyscript-test/assembly";
-import { FilterHeadersStatusValues, Headers, send_http_response, stream_context, HeaderPair } from "proxy-wasm-assemblyscript-sdk-test/assembly"
+export * from "@higress/proxy-wasm-assemblyscript-sdk/assembly/proxy";
+import { SetCtx, HttpContext, ProcessRequestHeadersBy, logger, ParseConfigBy, ParseResult, ProcessResponseHeadersBy } from "@higress/wasm-assemblyscript/assembly";
+import { FilterHeadersStatusValues, Headers, send_http_response, stream_context, HeaderPair } from "@higress/proxy-wasm-assemblyscript-sdk/assembly"
 import { JSON } from "assemblyscript-json/assembly";
-import { JSON as JSON_NO_EXCEPTION} from "json-as/assembly";
 
 class CustomResponseConfig {
   statusCode: u32;

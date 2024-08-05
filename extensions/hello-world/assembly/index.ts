@@ -1,6 +1,6 @@
-export * from "proxy-wasm-assemblyscript-sdk-test/assembly/proxy";
-import { SetCtx, HttpContext, ProcessRequestHeadersBy, logger, ParseResult, ParseConfigBy } from "wasm-assemblyscript-test/assembly";
-import { FilterHeadersStatusValues, send_http_response, stream_context } from "proxy-wasm-assemblyscript-sdk-test/assembly"
+export * from "@higress/proxy-wasm-assemblyscript-sdk/assembly/proxy";
+import { SetCtx, HttpContext, ProcessRequestHeadersBy, logger, ParseResult, ParseConfigBy } from "@higress/wasm-assemblyscript/assembly";
+import { FilterHeadersStatusValues, send_http_response, stream_context } from "@higress/proxy-wasm-assemblyscript-sdk/assembly"
 import { JSON } from "assemblyscript-json/assembly";
 
 class HelloWorldConfig {

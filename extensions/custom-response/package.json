@@ -15,8 +15,8 @@
   "devDependencies": {
     "assemblyscript": "^0.27.29",
     "assemblyscript-json": "^1.1.0",
-    "proxy-wasm-assemblyscript-sdk-test": "^0.0.1",
-    "wasm-assemblyscript-test": "^0.0.1"
+    "@higress/proxy-wasm-assemblyscript-sdk": "^0.0.1",
+    "@higress/wasm-assemblyscript": "^0.0.1"
   },
   "type": "module",
   "exports": {
