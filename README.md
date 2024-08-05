@@ -30,4 +30,4 @@ npx asinit .
 npm run asbuild
 ```
 
-构建结果将在“build”文件夹中。其中，`debug.wasm`和`release.wasm`是已编译的文件。
+构建结果将在`build`文件夹中。其中，`debug.wasm`和`release.wasm`是已编译的文件。
