@@ -45,11 +45,11 @@ type ParseConfigFunc<PluginConfig> = (
 ) => ParseResult<PluginConfig>;
 type OnHttpHeadersFunc<PluginConfig> = (
   context: HttpContext,
-  config: PluginConfig,
+  config: PluginConfig | null,
 ) => FilterHeadersStatusValues;
 type OnHttpBodyFunc<PluginConfig> = (
   context: HttpContext,
-  config: PluginConfig,
+  config: PluginConfig | null,
   body: ArrayBuffer,
 ) => FilterDataStatusValues;
 
@@ -60,7 +60,7 @@ class CommonRootCtx<PluginConfig> extends RootContext {
   pluginName: string;
   hasCustomConfig: boolean;
   ruleMatcher!: RuleMatcher<PluginConfig>;
-  parseConfig!: ParseConfigFunc<PluginConfig>;
+  parseConfig: ParseConfigFunc<PluginConfig> | null;
   onHttpRequestHeaders: OnHttpHeadersFunc<PluginConfig> | null;
   onHttpRequestBody: OnHttpBodyFunc<PluginConfig> | null;
   onHttpResponseHeaders: OnHttpHeadersFunc<PluginConfig> | null;
@@ -75,7 +75,7 @@ class CommonRootCtx<PluginConfig> extends RootContext {
     this.onHttpRequestBody = null;
     this.onHttpResponseHeaders = null;
     this.onHttpResponseBody = null;
-
+    this.parseConfig = null;
     this.ruleMatcher = new RuleMatcher<PluginConfig>();
     for (let i = 0; i < setFuncs.length; i++) {
       changetype<Closure<PluginConfig>>(setFuncs[i]).lambdaFn(
@@ -107,7 +107,11 @@ class CommonRootCtx<PluginConfig> extends RootContext {
     } else {
       jsonData = changetype<JSON.Obj>(JSON.parse(data));
     }
-    return this.ruleMatcher.parseRuleConfig(jsonData, this.parseConfig);
+    if (!this.hasCustomConfig) {
+      log(LogLevelValues.warn, "config is not empty, but has no ParseConfigFunc")
+      this.parseConfig = (json: JSON.Obj): ParseResult<PluginConfig> =>{ return new ParseResult<PluginConfig>(null, true); };
+    }
+    return this.ruleMatcher.parseRuleConfig(jsonData, this.parseConfig as ParseConfigFunc<PluginConfig>);
   }
 }
 
@@ -291,12 +295,12 @@ class CommonCtx<PluginConfig> extends Context implements HttpContext {
   }
 
   onRequestHeaders(_a: u32, _end_of_stream: boolean): FilterHeadersStatusValues {
-    const config = this.commonRootCtx.ruleMatcher.getMatchConfig();
-    if (config == null) {
+    const parseResult = this.commonRootCtx.ruleMatcher.getMatchConfig();
+    if (parseResult.success == false) {
       log(LogLevelValues.error, "get match config failed");
       return FilterHeadersStatusValues.Continue;
     }
-    this.config = config;
+    this.config = parseResult.pluginConfig;
 
     if (isBinaryRequestBody()) {
       this.needRequestBody = false;
@@ -307,7 +311,7 @@ class CommonCtx<PluginConfig> extends Context implements HttpContext {
     }
     return this.commonRootCtx.onHttpRequestHeaders(
       this,
-      config as PluginConfig
+      this.config
     );
   }
 

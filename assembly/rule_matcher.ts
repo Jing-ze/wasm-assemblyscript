@@ -36,7 +36,7 @@ class RuleConfig<PluginConfig> {
   category: Category;
   routes!: Map<string, boolean>;
   hosts!: Array<HostMatcher>;
-  config!: PluginConfig;
+  config!: PluginConfig | null;
 
   constructor() {
     this.category = Category.Route;
@@ -44,9 +44,9 @@ class RuleConfig<PluginConfig> {
 }
 
 export class ParseResult<PluginConfig> {
-  pluginConfig: PluginConfig;
+  pluginConfig: PluginConfig | null;
   success: boolean;
-  constructor(pluginConfig: PluginConfig, success: boolean) {
+  constructor(pluginConfig: PluginConfig | null, success: boolean) {
     this.pluginConfig = pluginConfig;
     this.success = success;
   }
@@ -63,14 +63,14 @@ export class RuleMatcher<PluginConfig> {
     this.hasGlobalConfig = false;
   }
 
-  getMatchConfig(): PluginConfig | null {
+  getMatchConfig(): ParseResult<PluginConfig> {
     const host = getRequestHost();
     if (!host) {
-      return null;
+      return new ParseResult<PluginConfig>(null, false);
     }
     const result = get_property("route_name")
     if (result.status != WasmResultValues.Ok) {
-      return null
+      return new ParseResult<PluginConfig>(null, false);
     }
     const routeName = String.UTF8.decode(result.returnValue);
     
@@ -78,21 +78,21 @@ export class RuleMatcher<PluginConfig> {
       const rule = this.ruleConfig[i];
       if (rule.category == Category.Host) {
         if (this.hostMatch(rule, host)) {
-          return rule.config;
+          return new ParseResult<PluginConfig>(rule.config, true);
         }
       }
       if (routeName) {
         if (rule.routes.has(routeName)) {
           log(LogLevelValues.debug, "getMatchConfig: match route: " + rule.routes.toString());
-          return rule.config;
+          return new ParseResult<PluginConfig>(rule.config, true);
         }
       }
     }
 
     if (this.hasGlobalConfig) {
-      return this.globalConfig;
+      return new ParseResult<PluginConfig>(this.globalConfig, true);
     }
-    return null;
+    return new ParseResult<PluginConfig>(null, false);
   }
 
   parseRuleConfig(
