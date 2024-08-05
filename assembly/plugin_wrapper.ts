@@ -105,7 +105,13 @@ class CommonRootCtx<PluginConfig> extends RootContext {
         return true;
       }
     } else {
-      jsonData = changetype<JSON.Obj>(JSON.parse(data));
+      const parseData = JSON.parse(data);
+      if (parseData.isObj) {
+        jsonData = changetype<JSON.Obj>(JSON.parse(data));
+      } else {
+        log(LogLevelValues.error, "parse json data failed")
+        return false;
+      }
     }
     if (!this.hasCustomConfig) {
       log(LogLevelValues.warn, "config is not empty, but has no ParseConfigFunc")

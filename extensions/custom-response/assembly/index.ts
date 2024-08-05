@@ -32,7 +32,6 @@ function parseConfig(json: JSON.Obj): ParseResult<CustomResponseConfig> {
     for (let i = 0; i < headersArray.valueOf().length; i++) {
       let header = headersArray._arr[i];
       let jsonString = (<JSON.Str>header).toString()
-      logger.Info(jsonString);
       let kv = jsonString.split("=")
       if (kv.length == 2) {
         let key = kv[0].trim();
@@ -83,16 +82,15 @@ function onHttpRequestHeaders(context: HttpContext, config: CustomResponseConfig
 }
 
 function onHttpResponseHeaders(context: HttpContext, config: CustomResponseConfig): FilterHeadersStatusValues {
-  const statusCodeStr = stream_context.headers.response.get(":status")
+  let statusCodeStr = stream_context.headers.response.get(":status")
   if (statusCodeStr == "") {
     logger.Error("get http response status code failed");
+    return FilterHeadersStatusValues.Continue;
   }
-  const statusCode = parseInt(statusCodeStr);
-  if (config.enableOnStatus != null) {
-    for (let i = 0; i < config.enableOnStatus.length; i++) {
-      if (statusCode == config.enableOnStatus[i]) {
-        send_http_response(config.statusCode, "custom-response", config.body, config.headers);
-      }
+  let statusCode = parseInt(statusCodeStr);
+  for (let i = 0; i < config.enableOnStatus.length; i++) {
+    if (statusCode == config.enableOnStatus[i]) {
+      send_http_response(config.statusCode, "custom-response", config.body, config.headers);
     }
   }
   return FilterHeadersStatusValues.Continue;

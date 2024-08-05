@@ -137,6 +137,10 @@ export class RuleMatcher<PluginConfig> {
 
     const rulesArray = rules.valueOf();
     for (let i = 0; i < rulesArray.length; i++) {
+      if (!rulesArray[i].isObj) {
+        log(LogLevelValues.error, "parse rule failed, rules must be an array of objects");
+        continue;
+      }
       const ruleJson = changetype<JSON.Obj>(rulesArray[i]);
       const rule = new RuleConfig<PluginConfig>();
       const parseResult = parsePluginConfig(ruleJson);
