@@ -61,7 +61,7 @@ export var Logger: Log = new Log("");
 class CommonRootCtx<PluginConfig> extends RootContext {
   pluginName: string;
   hasCustomConfig: boolean;
-  ruleMatcher!: RuleMatcher<PluginConfig>;
+  ruleMatcher: RuleMatcher<PluginConfig>;
   parseConfig: ParseConfigFunc<PluginConfig> | null;
   onHttpRequestHeaders: OnHttpHeadersFunc<PluginConfig> | null;
   onHttpRequestBody: OnHttpBodyFunc<PluginConfig> | null;
@@ -72,7 +72,7 @@ class CommonRootCtx<PluginConfig> extends RootContext {
   constructor(context_id: u32, pluginName: string, setFuncs: usize[]) {
     super(context_id);
     this.pluginName = pluginName;
-    Logger = new Log(this.pluginName);
+    Logger = new Log(pluginName);
     this.hasCustomConfig = true;
     this.onHttpRequestHeaders = null;
     this.onHttpRequestBody = null;
