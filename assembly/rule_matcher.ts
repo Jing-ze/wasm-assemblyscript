@@ -341,6 +341,6 @@ export class RuleMatcher<PluginConfig> {
   }
 }
 
-function boolToInt(value: bool): i32 {
+function boolToInt(value: boolean): i32 {
   return value ? 1 : 0;
 }
